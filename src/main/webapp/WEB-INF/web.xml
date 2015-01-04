@@ -19,4 +19,14 @@
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>com.tjumis.microblog.CORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <servlet-name>mvc-dispatcher</servlet-name>
+    </filter-mapping>
 </web-app>

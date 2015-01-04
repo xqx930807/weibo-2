@@ -30,6 +30,13 @@ public class UserDao {
         return users;
     }
 
+    public void updateToken(String email, String token) {
+        User user = findUserByEmail(email).get(0);
+        user.setToken(token);
+        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.close();
+    }
+
     public void updateToken(User user) {
         sessionFactory.getCurrentSession().update(user);
         sessionFactory.close();
@@ -45,14 +52,26 @@ public class UserDao {
     }
 
     /**
+     * 根据uid获取用户实例列表
+     * @param uid 用户uid
+     * @return 用户实例
+     */
+    public User findUserByUid(String uid) {
+        Criteria c = sessionFactory.getCurrentSession().createCriteria(User.class);
+        c.add(Restrictions.eq("id", uid));
+        sessionFactory.close();
+        return (User) c.list().get(0);
+    }
+
+    /**
      * 根据用户名获取用户实例列表
-     * @param username 用户登陆时使用的登录名
+     * @param email 用户登陆时使用的登录名
      * @return 用户实例列表
      */
     @SuppressWarnings("unchecked")
-    public List<User> findUserByUsername(String username) {
+    public List<User> findUserByEmail(String email) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(User.class);
-        c.add(Restrictions.eq("username", username));
+        c.add(Restrictions.eq("email", email));
         sessionFactory.close();
         return  c.list();
     }

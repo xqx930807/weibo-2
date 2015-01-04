@@ -6,22 +6,22 @@ package com.tjumis.microblog.model;
  */
 public class ResultResponse {
 
-    public static final int STATUS_OK = 0;
-    public static final int STATUS_FAILED = 1;
+    public static final boolean STATUS_OK = true;
+    public static final boolean STATUS_FAILED = false;
 
     private String info;
-    private int status;
+    private boolean status;
 
-    public ResultResponse(int _status, String _info) {
+    public ResultResponse(boolean _status, String _info) {
         this.status = _status;
         this.info = _info;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

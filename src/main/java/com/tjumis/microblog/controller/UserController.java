@@ -33,15 +33,15 @@ public class UserController {
     }
 
     /**
-     * 登陆 GET /users/login?username={username}&password={password}
-     * @param username 用户名
+     * 登陆 GET /users/login?email={email}&password={password}
+     * @param email 邮箱
      * @param password 密码
      * @return result response
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Object login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
-        List<User> users = mUserDao.findUserByUsername(username);
+    public Object login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+        List<User> users = mUserDao.findUserByEmail(email);
         if (users.size() == 0) {
             return new ResponseEntity<Object>(
                     new ResultResponse(ResultResponse.STATUS_FAILED, "用户名错误"),
@@ -65,14 +65,42 @@ public class UserController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
-    public String logout() {
+    public String logout(@RequestParam(value = "username")String username) {
+        mUserDao.updateToken(username, generateToken(username));
         return "logout";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public String register() {
-        return "registered";
+    public Object register(
+            @RequestParam(value = "email")String email,
+            @RequestParam(value = "password")String password) {
+        if (mUserDao.findUserByEmail(email).size() > 0) {
+            return new ResponseEntity<Object>(
+                    new ResultResponse(ResultResponse.STATUS_FAILED, "该邮箱已被注册"),
+                    HttpStatus.FORBIDDEN);
+        }
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        mUserDao.addUser(user);
+        return new ResponseEntity<Object>(
+                new ResultResponse(ResultResponse.STATUS_OK, "注册成功"),
+                HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/register/checkEmail", method = RequestMethod.POST)
+    @ResponseBody
+    public Object checkEmail(@RequestParam(value = "email")String email) {
+        int count = mUserDao.findUserByEmail(email).size();
+        return count == 0 ?
+                new ResponseEntity<Object>(
+                        new ResultResponse(ResultResponse.STATUS_OK, "邮箱未被注册"),
+                        HttpStatus.OK)
+                :
+                new ResponseEntity<Object>(
+                        new ResultResponse(ResultResponse.STATUS_FAILED, "该邮箱已被注册"),
+                        HttpStatus.FORBIDDEN);
     }
 
     /**

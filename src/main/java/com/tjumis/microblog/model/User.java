@@ -12,6 +12,8 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "email")
+    private String email;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -31,6 +33,14 @@ public class User {
 
     public boolean checkPassword(String _password) {
         return this.password.equals(_password);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getToken() {

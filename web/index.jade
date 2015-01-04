@@ -1,0 +1,45 @@
+doctype html
+html(ng-app="weiboApp")
+    head(lang="en")
+        meta(charset="UTF8")
+        title MIS Weibo
+        link(rel="stylesheet" href="/assets/stylesheet/main.css")
+        link(rel="stylesheet" href="/assets/bower_components/angular-material/angular-material.min.css")
+        script(src="/assets/bower_components/hammerjs/hammer.min.js")
+        script(src="/assets/bower_components/angular/angular.min.js")
+        script(src="/assets/bower_components/angular-animate/angular-animate.min.js")
+        script(src="/assets/bower_components/angular-aria/angular-aria.min.js")
+        script(src="/assets/bower_components/angular-material/angular-material.min.js")
+        script(src="/assets/bower_components/angular-ui-router/release/angular-ui-router.min.js")
+        script(src="/assets/bower_components/angular-route/angular-route.min.js")
+        script(src="/assets/bower_components/angular-cookies/angular-cookies.min.js")
+        script(src="/assets/bower_components/angular-resource/angular-resource.min.js")
+        script(src="/assets/app/app.js")
+        script(src="/assets/app/directives/configDirective.js")
+        script(src="/assets/app/services/configService.js")
+        script(src="/assets/app/services/authService.js")
+        script(src="/assets/app/services/searchService.js")
+        script(src="/assets/app/services/weiboService.js")
+        script(src="/assets/app/controllers/loginController.js")
+        script(src="/assets/app/controllers/navigationController.js")
+        script(src="/assets/app/controllers/weiboController.js")
+        script(src="/assets/app/controllers/toastController.js")
+
+body(layout="row")
+    md-sidenav.md-sidenav-left.md-whiteframe-z2.md-locked-open(layout="column" md-component-id="left" style="overflow: hidden; display: flex;" md-is-locked-open="true")
+        md-toolbar.md-default-theme.md-whiteframe-z1
+            .md-toolbar-tools
+                span MIS Weibo
+
+        md-content.md-default-theme.md-padding
+            div(ui-view="navcontent")
+
+    div(layout="column" role="main", layout-fill, flex)
+        md-toolbar.md-default-theme.md-whiteframe-z1(layout="column")
+            .md-toolbar-tools
+                div(ui-view="navtitle")
+                span(flex)
+                md-button.md-button.md-warn RIGHT BUTTON
+        div(ui-view="content")
+        div
+            a(href="#/users/login") /users/login

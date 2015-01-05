@@ -91,4 +91,22 @@ public class WeiboController {
                 new ResultResponse(ResultResponse.STATUS_OK, "发布成功"),
                 HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/users/{uid}/weibo/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deleteWeibo(
+            @PathVariable(value = "uid")String uid,
+            @PathVariable(value = "id")String id,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        mWeiboDao.deleteWeibo(id);
+        return new ResponseEntity<Object>(
+                new ResultResponse(ResultResponse.STATUS_OK, "删除成功"),
+                HttpStatus.OK);
+    }
 }

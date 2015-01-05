@@ -5,6 +5,7 @@ import com.tjumis.microblog.model.ResultResponse;
 import com.tjumis.microblog.model.User;
 import com.tjumis.microblog.model.VUser;
 import com.tjumis.microblog.utils.SecurityUtils;
+import com.tjumis.microblog.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +85,7 @@ public class UserController {
         user.setEmail(email);
         user.setNickname(nickname);
         user.setPassword(SecurityUtils.SHA1(password));
+        user.setCreatedAt(TimeUtils.format());
         mUserDao.addUser(user);
         return new ResponseEntity<Object>(
                 new ResultResponse(ResultResponse.STATUS_OK, "注册成功"),

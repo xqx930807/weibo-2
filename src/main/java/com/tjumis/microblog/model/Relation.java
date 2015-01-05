@@ -19,19 +19,19 @@ public class Relation {
     @Column(name = "created_at")
     private String createdAt;
 
-    private String username;
+    private String nickname;
     private String avatar;
 
     public Relation() {
 
     }
 
-    public Relation(long id, long uid, long fid, String createdAt, String username, String avatar) {
+    public Relation(long id, long uid, long fid, String createdAt, String nickname, String avatar) {
         this.id = id;
         this.uid = uid;
         this.fid = fid;
         this.createdAt = createdAt;
-        this.username = username;
+        this.nickname = nickname;
         this.avatar = avatar;
     }
 
@@ -43,12 +43,12 @@ public class Relation {
         this.avatar = avatar;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getCreatedAt() {

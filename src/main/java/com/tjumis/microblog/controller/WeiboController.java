@@ -37,7 +37,7 @@ public class WeiboController {
             @PathVariable(value = "uid")String uid,
             @RequestParam(value = "token")String token) {
         User user = mUserDao.findUserByUid(uid);
-        if ( ! user.checkToken(token)) {
+        if (user == null || ! user.checkToken(token)) {
             return new ResponseEntity<Object>(
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
@@ -51,7 +51,7 @@ public class WeiboController {
             @PathVariable(value = "uid")String uid,
             @RequestParam(value = "token")String token) {
         User user = mUserDao.findUserByUid(uid);
-        if ( ! user.checkToken(token)) {
+        if (user == null || ! user.checkToken(token)) {
             return new ResponseEntity<Object>(
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
@@ -68,7 +68,7 @@ public class WeiboController {
             @RequestParam(value = "image")MultipartFile file,
             HttpServletRequest request) throws IOException{
         User user = mUserDao.findUserByUid(uid);
-        if ( ! user.checkToken(token)) {
+        if (user == null || ! user.checkToken(token)) {
             return new ResponseEntity<Object>(
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);

@@ -58,7 +58,7 @@ public class UserDao {
      */
     public User findUserByUid(String uid) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(User.class);
-        c.add(Restrictions.eq("id", uid));
+        c.add(Restrictions.eq("id", Long.valueOf(uid)));
         sessionFactory.close();
         return (User) c.list().get(0);
     }

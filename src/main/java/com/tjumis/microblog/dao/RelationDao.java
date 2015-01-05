@@ -21,10 +21,12 @@ public class RelationDao {
 
     @SuppressWarnings("unchecked")
     public List<Relation> getUserFans(String uid) {
-        Criteria c = sessionFactory.getCurrentSession().createCriteria(Relation.class);
-        c.add(Restrictions.eq("fid", uid));
-        sessionFactory.close();
-        return c.list();
+        String sql = "select r.id, r.uid, r.fid, r.created_at, u.nickname, u.avatar  "
+                + "from wb_relations r, wb_users u "
+                + "where u.id in ("
+                + "select uid from wb_relations where fid = " + uid
+                + ") and r.fid = " + uid;
+        return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Relation.class).list();
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +39,7 @@ public class RelationDao {
 
     @SuppressWarnings("unchecked")
     public List<Relation> getUserFollowedRelations(String uid) {
-        String sql = "select r.id, r.uid, r.fid, r.created_at, u.username, u.avatar  "
+        String sql = "select r.id, r.uid, r.fid, r.created_at, u.nickname, u.avatar  "
                     + "from wb_relations r, wb_users u "
                     + "where u.id in ("
                     + "select fid from wb_relations where uid = " + uid

@@ -5,15 +5,17 @@
         <item url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
         <item url="file://$PROJECT_DIR$/server.js" />
-        <item url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
-        <item url="file://$PROJECT_DIR$/assets/app/services/weiboService.js" />
-        <item url="file://$PROJECT_DIR$/assets/app/controllers/navigationController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/toastController.js" />
-        <item url="file://$PROJECT_DIR$/assets/app/services/searchService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/test.js" />
         <item url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/app.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/services/weiboService.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/navigationController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/services/searchService.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -21,10 +23,12 @@
       <root url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
       <root url="file://$PROJECT_DIR$/server.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/toastController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/test.js" />
       <root url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/app.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/services/weiboService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/navigationController.js" />

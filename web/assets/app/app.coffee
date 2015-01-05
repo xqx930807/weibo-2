@@ -6,6 +6,8 @@ app = angular.module 'weiboApp', [
   '$rootScope', '$state', '$stateParams', ($rootScope, $state, $stateParams) ->
     $rootScope.$state = $state
     $rootScope.$stateParams = $stateParams
+    $rootScope.userprofile = {}
+    $rootScope.rootUrl = "http://localhost:8080"
 ]
 
 .config ($httpProvider) ->
@@ -27,8 +29,11 @@ app = angular.module 'weiboApp', [
       .state 'index', {
         url : '/',
         views : {
-          'navtitle' :
-            template : ''
+          'navcontent' :
+            templateUrl : 'assets/app/views/navcontent.html'
+            controller : 'navContentCtrl'
+          'navbar' :
+            templateUrl : 'assets/app/views/navbar.index.html'
           'content' :
             templateUrl : "assets/app/views/content.html"
             controller : 'weiboCtrl'
@@ -38,17 +43,20 @@ app = angular.module 'weiboApp', [
       .state 'auth', {
         url : '/users/login'
         views :
-          'navtitle' :
-            template : "<span>请登录</span>"
+          'navbar' :
+            template : "<span>请登录 >></span>"
           'content' :
             templateUrl : "assets/app/views/login.html"
             controller : "loginCtrl"
       }
 ]
 
+.factory 'Weibos', () ->
+  return []
+
 .run ($rootScope, $state, $cookieStore) ->
   $state.go('index')
-  #$cookieStore.remove 'weibo.auth'
+  $cookieStore.remove 'weibo.auth'
   $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
 
 root = window ? this

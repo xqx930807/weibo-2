@@ -1,8 +1,10 @@
 service
   .factory 'weiboService', ['$http', ($http)->
     {
-      fetch : (callback) ->
-        $http.get('http://localhost:8080/weibo')
+      fetchTimeline : (auth, callback) ->
+        console.log "http://localhost:8080/users/#{auth.uid}/timeline?token=#{auth.token}"
+        console.log auth
+        $http.get("http://localhost:8080/users/#{auth.uid}/timeline?token=#{auth.token}")
           .success (data, status) ->
             console.log data
             callback null, data
@@ -11,6 +13,7 @@ service
             callback data, null
 
       search : (query) ->
-        $http.get('http://localhost:8080/weibo/search?query=+query')
+        console.log query
+        #$http.get('http://localhost:8080/weibo/search?query=+query')
     }
   ]

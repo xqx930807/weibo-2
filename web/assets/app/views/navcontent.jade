@@ -1,0 +1,3 @@
+md-content.md-padding.md-default-theme(layout="column" ng-controller="navContentCtrl")
+    img(ng-show="userprofile.avatar != null" src="{{ userprofile.avatar }}")
+    h1(ng-model="userprofile.nickname") {{ userprofile.nickname }}

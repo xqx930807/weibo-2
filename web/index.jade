@@ -24,6 +24,8 @@ html(ng-app="weiboApp")
         script(src="/assets/app/controllers/navigationController.js")
         script(src="/assets/app/controllers/weiboController.js")
         script(src="/assets/app/controllers/toastController.js")
+        script(src="/assets/app/controllers/navContentController.js")
+        script(src="/assets/app/controllers/navbarController.js")
 
 body(layout="row")
     md-sidenav.md-sidenav-left.md-whiteframe-z2.md-locked-open(layout="column" md-component-id="left" style="overflow: hidden; display: flex;" md-is-locked-open="true")
@@ -31,15 +33,11 @@ body(layout="row")
             .md-toolbar-tools
                 span MIS Weibo
 
-        md-content.md-default-theme.md-padding
-            div(ui-view="navcontent")
+        div(ui-view="navcontent")
 
     div(layout="column" role="main", layout-fill, flex)
         md-toolbar.md-default-theme.md-whiteframe-z1(layout="column")
-            .md-toolbar-tools
-                div(ui-view="navtitle")
-                span(flex)
-                md-button.md-button.md-warn RIGHT BUTTON
+            div.md-toolbar-tools(ui-view="navbar")
         div(ui-view="content")
         div
             a(href="#/users/login") /users/login

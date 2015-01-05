@@ -2,6 +2,6 @@ div(layout="column" ng-controller="loginCtrl")
     md-content.md-padding(style="margin-left: 100px;")
         form(role='form' name='loginForm')
             div(layout="column" align="center")
-                md-text-float(label="账号" ng-model="user.username" name="username", required, autofocus)
+                md-text-float(label="账号" ng-model="user.email" name="email", required, autofocus)
                 md-text-float(label="密码" ng-model="user.password" type="password" name="password" required)
                 md-button.md-primary.md-button(style="width: 200px;" ng-click="login()", ng-disabled="!loginForm.$valid") 登陆

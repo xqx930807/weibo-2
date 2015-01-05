@@ -6,17 +6,15 @@ service
               url : 'http://localhost:8080/users/login'
               method : 'POST'
               params : {
-                username : auth.username
+                email : auth.email
                 password : auth.password
               }
             })
             .success (data, status) ->
               if status is 200
-                $cookieStore.remove 'weibo.auth' if $cookieStore.get('weibo.auth')?
-                $cookieStore.put 'weibo.auth', data
                 callback
                   result : true
-                  info : ""
+                  info : data
               else
                 console.log data
                 callback

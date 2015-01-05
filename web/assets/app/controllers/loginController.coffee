@@ -1,11 +1,16 @@
 controller
-  .controller 'loginCtrl', ['$scope', '$state', '$mdToast', 'authService', ($scope, $state, $mdToast, authService) ->
+  .controller 'loginCtrl', ['$scope', '$state', '$cookieStore', '$mdToast', '$rootScope', 'authService', ($scope, $state, $cookieStore, $mdToast, $rootScope, authService) ->
     if authService.auth() != undefined
       $state.go 'index'
 
     $scope.user = {
-      username : ''
+      email : ''
       password : ''
+      nickname : ''
+      avatar : ''
+      location : ''
+      signature : ''
+      createdat : ''
     }
 
     $scope.toastPosition =
@@ -24,12 +29,20 @@ controller
 
     $scope.login = ->
       auth = {
-        username : $scope.user.username
+        email : $scope.user.email
         password : $scope.user.password
       }
       authService.login auth, (content) ->
-        console.log content
         if content.result is true
+          content.info.avatar = $rootScope.rootUrl + content.info.avatar if content.info.avatar?
+          $rootScope.userprofile = content.info
+          auth =
+            uid : content.info.id
+            email : content.info.email
+            token : content.info.token
+          $cookieStore.remove 'weibo.auth' if $cookieStore.get('weibo.auth')?
+          $cookieStore.put 'weibo.auth', auth
+
           $state.go 'index'
         else
           $scope.info = content.info

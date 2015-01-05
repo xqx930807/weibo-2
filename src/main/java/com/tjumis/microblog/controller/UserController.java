@@ -1,6 +1,7 @@
 package com.tjumis.microblog.controller;
 
 import com.tjumis.microblog.dao.UserDao;
+import com.tjumis.microblog.dao.WeiboDao;
 import com.tjumis.microblog.model.ResultResponse;
 import com.tjumis.microblog.model.User;
 import com.tjumis.microblog.model.VUser;
@@ -25,6 +26,8 @@ public class UserController {
 
     @Autowired
     UserDao mUserDao;
+    @Autowired
+    WeiboDao mWeiboDao;
 
     @RequestMapping(value = "/users/list", method = RequestMethod.GET)
     @ResponseBody
@@ -55,7 +58,9 @@ public class UserController {
         if (user.checkPassword(password)) {
             user.setToken(generateToken(user.getUsername()));
             mUserDao.updateToken(user);
-            return new ResponseEntity<Object>(new VUser(user), HttpStatus.OK);
+            VUser vuser = new VUser(user);
+            vuser.setWeibos(mWeiboDao.getUserWeibo(String.valueOf(user.getId())));
+            return new ResponseEntity<Object>(vuser, HttpStatus.OK);
         } else {
             return new ResponseEntity<Object>(
                     new ResultResponse(ResultResponse.STATUS_FAILED, "密码错误"),

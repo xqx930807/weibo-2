@@ -1,5 +1,7 @@
 package com.tjumis.microblog.model;
 
+import java.util.List;
+
 /**
  * Created by yong.h on 14/12/31.
  * 将密码字段隐藏掉了
@@ -13,6 +15,8 @@ public class VUser {
     private String location;
     private String signature;
     private String createdAt;
+
+    private List<Weibo> weibos;
 
     public String getSignature() {
         return signature;
@@ -76,6 +80,14 @@ public class VUser {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<Weibo> getWeibos() {
+        return this.weibos;
+    }
+
+    public void setWeibos(List<Weibo> weibos) {
+        this.weibos = weibos;
     }
 
     public VUser(User user) {

@@ -3,6 +3,7 @@ package com.tjumis.microblog.controller;
 import com.tjumis.microblog.dao.RelationDao;
 import com.tjumis.microblog.dao.UserDao;
 import com.tjumis.microblog.model.AuthErrorResponse;
+import com.tjumis.microblog.model.ResultResponse;
 import com.tjumis.microblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,23 @@ public class RelationController {
                     HttpStatus.UNAUTHORIZED);
         }
         return mRelationDao.getUserFans(uid);
+    }
+
+    @RequestMapping(value = "/users/{uid}/follow/{fid}", method = RequestMethod.POST)
+    @ResponseBody
+    public Object follow(
+            @PathVariable(value = "uid")String uid,
+            @PathVariable(value = "fid")String fid,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+           return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        mRelationDao.foOrUnfo(uid, fid);
+        return new ResponseEntity<Object>(
+                new ResultResponse(ResultResponse.STATUS_OK, "操作成功"),
+                HttpStatus.OK);
     }
 }

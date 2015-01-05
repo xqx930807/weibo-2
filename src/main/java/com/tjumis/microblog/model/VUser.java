@@ -9,6 +9,7 @@ import java.util.List;
 public class VUser {
     private long id;
     private String username;
+    private String email;
     private String token;
     private String avatar;
     private String nickname;
@@ -32,6 +33,14 @@ public class VUser {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -92,6 +101,7 @@ public class VUser {
 
     public VUser(User user) {
         this.id = user.getId();
+        this.email = user.getEmail();
         this.username = user.getUsername();
         this.token = user.getToken();
         this.avatar = user.getAvatar();

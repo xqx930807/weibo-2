@@ -1,6 +1,8 @@
 package com.tjumis.microblog.dao;
 
+import com.tjumis.microblog.model.IRelation;
 import com.tjumis.microblog.model.Relation;
+import com.tjumis.microblog.utils.TimeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -45,5 +47,22 @@ public class RelationDao {
                     + "select fid from wb_relations where uid = " + uid
                     + ") and r.uid = " + uid;
         return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Relation.class).list();
+    }
+
+    public void foOrUnfo(String uid, String fid) {
+        Criteria c = sessionFactory.getCurrentSession().createCriteria(IRelation.class);
+        c.add(Restrictions.eq("uid", Long.valueOf(uid)));
+        c.add(Restrictions.eq("fid", Long.valueOf(fid)));
+        List arr = c.list();
+        if (arr.size() == 0) {
+            IRelation relation = new IRelation();
+            relation.setUid(Long.valueOf(uid));
+            relation.setFid(Long.valueOf(fid));
+            relation.setCreatedAt(TimeUtils.format());
+            sessionFactory.getCurrentSession().save(relation);
+        } else {
+            IRelation relation = (IRelation) arr.get(0);
+            sessionFactory.getCurrentSession().delete(relation);
+        }
     }
 }

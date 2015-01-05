@@ -2,6 +2,7 @@ package com.tjumis.microblog.controller;
 
 import com.tjumis.microblog.dao.UserDao;
 import com.tjumis.microblog.dao.WeiboDao;
+import com.tjumis.microblog.model.AuthErrorResponse;
 import com.tjumis.microblog.model.ResultResponse;
 import com.tjumis.microblog.model.User;
 import com.tjumis.microblog.model.VUser;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,7 +41,9 @@ public class UserController {
      */
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     @ResponseBody
-    public Object login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+    public Object login(
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "password") String password) {
         List<User> users = mUserDao.findUserByEmail(email);
         if (users.size() == 0) {
             return new ResponseEntity<Object>(
@@ -56,7 +56,7 @@ public class UserController {
         }
         User user = users.get(0);
         if (user.checkPassword(password)) {
-            user.setToken(generateToken(user.getUsername()));
+            user.setToken(generateToken(user.getEmail()));
             mUserDao.updateToken(user);
             VUser vuser = new VUser(user);
             vuser.setWeibos(mWeiboDao.getUserWeibo(String.valueOf(user.getId())));
@@ -68,11 +68,22 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/users/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/{uid}/logout", method = RequestMethod.POST)
     @ResponseBody
-    public String logout(@RequestParam(value = "username")String username) {
-        mUserDao.updateToken(username, generateToken(username));
-        return "logout";
+    public Object logout(
+            @PathVariable(value = "uid")String uid,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        user.setToken(generateToken(user.getEmail()));
+        mUserDao.updateToken(user);
+        return new ResponseEntity<Object>(
+                new ResultResponse(ResultResponse.STATUS_OK, "注销成功"),
+                HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/register", method = RequestMethod.POST)
@@ -111,12 +122,30 @@ public class UserController {
                         HttpStatus.FORBIDDEN);
     }
 
+    @RequestMapping("/users/{uid}/user/{tid}")
+    public Object getUserInfo(
+            @PathVariable(value = "uid")String uid,
+            @PathVariable(value = "tid")String tid,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        User want = mUserDao.findUserByUid(tid);
+        VUser vuser = new VUser(want);
+        vuser.setToken("");
+        vuser.setWeibos(mWeiboDao.getUserWeibo(String.valueOf(want.getId())));
+        return new ResponseEntity<Object>(vuser, HttpStatus.OK);
+    }
+
     /**
      * 生成token
-     * @param username 用户名
+     * @param email 邮箱
      * @return token
      */
-    private String generateToken(String username) {
-        return SecurityUtils.SHA(username + System.currentTimeMillis() + Math.random());
+    private String generateToken(String email) {
+        return SecurityUtils.SHA(email + System.currentTimeMillis() + Math.random());
     }
 }

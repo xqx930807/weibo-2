@@ -23,9 +23,41 @@ public class Weibo {
     @Column(name = "deleted_at")
     private String deletedAt;
 
-    public VWeibo getVWeibo() {
-        return new VWeibo(this);
+    private String username;
+    private String avatar;
+
+    public String getUsername() {
+        return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Weibo() {}
+
+    public Weibo(long id, long uid, String content, String image, String createdAt, String deletedAt, String username, String avatar) {
+        this.id = id;
+        this.uid = uid;
+        this.content = content;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.deletedAt = deletedAt;
+        this.username = username;
+        this.avatar = avatar;
+    }
+
+//    public VWeibo getVWeibo() {
+//        return new VWeibo(this);
+//    }
 
     public String getDeletedAt() {
         return deletedAt;
@@ -75,4 +107,8 @@ public class Weibo {
         this.createdAt = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Weibo: id=%s, username=%s", this.id, this.username);
+    }
 }

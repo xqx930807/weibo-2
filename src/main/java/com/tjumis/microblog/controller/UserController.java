@@ -73,6 +73,7 @@ public class UserController {
     @ResponseBody
     public Object register(
             @RequestParam(value = "email")String email,
+            @RequestParam(value = "nickname")String nickname,
             @RequestParam(value = "password")String password) {
         if (mUserDao.findUserByEmail(email).size() > 0) {
             return new ResponseEntity<Object>(
@@ -81,11 +82,12 @@ public class UserController {
         }
         User user = new User();
         user.setEmail(email);
+        user.setNickname(nickname);
         user.setPassword(password);
         mUserDao.addUser(user);
         return new ResponseEntity<Object>(
                 new ResultResponse(ResultResponse.STATUS_OK, "注册成功"),
-                HttpStatus.FORBIDDEN);
+                HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/register/checkEmail", method = RequestMethod.POST)

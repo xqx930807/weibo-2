@@ -1,5 +1,6 @@
 package com.tjumis.microblog.dao;
 
+import com.tjumis.microblog.model.IWeibo;
 import com.tjumis.microblog.model.Weibo;
 import com.tjumis.microblog.utils.StringUtils;
 import org.hibernate.Criteria;
@@ -20,7 +21,7 @@ public class WeiboDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void addWeibo(Weibo weibo) {
+    public void addWeibo(IWeibo weibo) {
         sessionFactory.getCurrentSession().save(weibo);
     }
 

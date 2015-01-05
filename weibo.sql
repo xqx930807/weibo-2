@@ -11,11 +11,23 @@
  Target Server Version : 50614
  File Encoding         : utf-8
 
- Date: 12/31/2014 16:30:16 PM
+ Date: 01/05/2015 20:43:02 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `wb_relations`
+-- ----------------------------
+DROP TABLE IF EXISTS `wb_relations`;
+CREATE TABLE `wb_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `fid` int(11) DEFAULT NULL,
+  `created_at` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `wb_users`
@@ -23,6 +35,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `wb_users`;
 CREATE TABLE `wb_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
@@ -32,14 +45,7 @@ CREATE TABLE `wb_users` (
   `signature` varchar(255) DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `wb_users`
--- ----------------------------
-BEGIN;
-INSERT INTO `wb_users` VALUES ('1', 'yong', '111111', '3b08b61f5a5a617c10fd6b4c15d76a8f8692543d', null, null, null, null, null);
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `wb_weibo`
@@ -53,6 +59,6 @@ CREATE TABLE `wb_weibo` (
   `created_at` varchar(255) DEFAULT NULL,
   `deleted_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

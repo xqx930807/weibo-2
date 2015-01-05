@@ -19,6 +19,38 @@ public class Relation {
     @Column(name = "created_at")
     private String createdAt;
 
+    private String username;
+    private String avatar;
+
+    public Relation() {
+
+    }
+
+    public Relation(long id, long uid, long fid, String createdAt, String username, String avatar) {
+        this.id = id;
+        this.uid = uid;
+        this.fid = fid;
+        this.createdAt = createdAt;
+        this.username = username;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }

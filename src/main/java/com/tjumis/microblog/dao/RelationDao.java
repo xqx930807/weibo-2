@@ -34,4 +34,14 @@ public class RelationDao {
         sessionFactory.close();
         return arr;
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Relation> getUserFollowedRelations(String uid) {
+        String sql = "select r.id, r.uid, r.fid, r.created_at, u.username, u.avatar  "
+                    + "from wb_relations r, wb_users u "
+                    + "where u.id in ("
+                    + "select fid from wb_relations where uid = " + uid
+                    + ") and r.uid = " + uid;
+        return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Relation.class).list();
+    }
 }

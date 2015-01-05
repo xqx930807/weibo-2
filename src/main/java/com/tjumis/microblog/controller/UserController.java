@@ -20,13 +20,12 @@ import java.util.List;
  * Created by yong.h on 14/12/30.
  */
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     UserDao mUserDao;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
     @ResponseBody
     public List<User> list() {
         return mUserDao.listUser();
@@ -38,7 +37,7 @@ public class UserController {
      * @param password 密码
      * @return result response
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     @ResponseBody
     public Object login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
         List<User> users = mUserDao.findUserByEmail(email);
@@ -63,14 +62,14 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/logout", method = RequestMethod.POST)
     @ResponseBody
     public String logout(@RequestParam(value = "username")String username) {
         mUserDao.updateToken(username, generateToken(username));
         return "logout";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/register", method = RequestMethod.POST)
     @ResponseBody
     public Object register(
             @RequestParam(value = "email")String email,
@@ -89,7 +88,7 @@ public class UserController {
                 HttpStatus.FORBIDDEN);
     }
 
-    @RequestMapping(value = "/register/checkEmail", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/register/checkEmail", method = RequestMethod.POST)
     @ResponseBody
     public Object checkEmail(@RequestParam(value = "email")String email) {
         int count = mUserDao.findUserByEmail(email).size();

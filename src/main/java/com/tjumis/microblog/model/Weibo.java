@@ -44,6 +44,15 @@ public class Weibo {
 
     public Weibo() {}
 
+    public Weibo(long id, long uid, String content, String image, String createdAt, String deletedAt) {
+        this.id = id;
+        this.uid = uid;
+        this.content = content;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.deletedAt = deletedAt;
+    }
+
     public Weibo(long id, long uid, String content, String image, String createdAt, String deletedAt, String username, String avatar) {
         this.id = id;
         this.uid = uid;

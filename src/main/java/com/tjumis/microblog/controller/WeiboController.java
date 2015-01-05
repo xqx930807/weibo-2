@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -108,5 +109,24 @@ public class WeiboController {
         return new ResponseEntity<Object>(
                 new ResultResponse(ResultResponse.STATUS_OK, "删除成功"),
                 HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/{uid}/weibo/search", method = RequestMethod.GET)
+    @ResponseBody
+    public Object search(
+            @PathVariable(value = "uid")String uid,
+            @RequestParam(value = "token")String token,
+            @RequestParam(value = "query")String query) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        List<Weibo> weibos = new ArrayList<Weibo>();
+        if (query != null && !query.equals("")) {
+            weibos = mWeiboDao.searchWeibo(query);
+        }
+        return new ResponseEntity<Object>(weibos, HttpStatus.OK);
     }
 }

@@ -66,4 +66,13 @@ public class WeiboDao {
         c.add(Restrictions.eq("id", Long.valueOf(id)));
         return (IWeibo) c.list().get(0);
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Weibo> searchWeibo(String query) {
+        String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"
+                + " from wb_users u, wb_weibo w "
+                + "where w.content like '%" + query + "%'"
+                + " and u.id = w.uid";
+        return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Weibo.class).list();
+    }
 }

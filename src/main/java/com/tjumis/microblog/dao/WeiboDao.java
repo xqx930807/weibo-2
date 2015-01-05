@@ -3,9 +3,7 @@ package com.tjumis.microblog.dao;
 import com.tjumis.microblog.model.IWeibo;
 import com.tjumis.microblog.model.Weibo;
 import com.tjumis.microblog.utils.StringUtils;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +29,7 @@ public class WeiboDao {
 
     @SuppressWarnings("unchecked")
     public List<Weibo> getUserWeibo(String uid) {
-        String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.username, u.avatar"
+        String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"
                 + " from wb_users u, wb_weibo w "
                 + "where w.uid = " + uid
                 + " and u.id = w.uid";
@@ -48,7 +46,7 @@ public class WeiboDao {
 
     @SuppressWarnings("unchecked")
     public List<Weibo> getUserTimeline(String ids) {
-        String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.username, u.avatar"
+        String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"
                 + " from wb_users u, wb_weibo w "
                 + "where w.uid in ("
                 + ids

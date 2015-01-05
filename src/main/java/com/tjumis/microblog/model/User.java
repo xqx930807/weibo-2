@@ -35,6 +35,10 @@ public class User {
         return this.password.equals(_password);
     }
 
+    public boolean checkToken(String token) {
+        return this.token.equals(token);
+    }
+
     public String getEmail() {
         return email;
     }

@@ -23,15 +23,15 @@ public class Weibo {
     @Column(name = "deleted_at")
     private String deletedAt;
 
-    private String username;
+    private String nickname;
     private String avatar;
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getAvatar() {
@@ -53,14 +53,14 @@ public class Weibo {
         this.deletedAt = deletedAt;
     }
 
-    public Weibo(long id, long uid, String content, String image, String createdAt, String deletedAt, String username, String avatar) {
+    public Weibo(long id, long uid, String content, String image, String createdAt, String deletedAt, String nickname, String avatar) {
         this.id = id;
         this.uid = uid;
         this.content = content;
         this.image = image;
         this.createdAt = createdAt;
         this.deletedAt = deletedAt;
-        this.username = username;
+        this.nickname = nickname;
         this.avatar = avatar;
     }
 
@@ -118,6 +118,6 @@ public class Weibo {
 
     @Override
     public String toString() {
-        return String.format("Weibo: id=%s, username=%s", this.id, this.username);
+        return String.format("Weibo: id=%s, nickname=%s", this.id, this.nickname);
     }
 }

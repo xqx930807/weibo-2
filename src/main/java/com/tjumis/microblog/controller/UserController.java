@@ -83,7 +83,7 @@ public class UserController {
         User user = new User();
         user.setEmail(email);
         user.setNickname(nickname);
-        user.setPassword(password);
+        user.setPassword(SecurityUtils.SHA1(password));
         mUserDao.addUser(user);
         return new ResponseEntity<Object>(
                 new ResultResponse(ResultResponse.STATUS_OK, "注册成功"),

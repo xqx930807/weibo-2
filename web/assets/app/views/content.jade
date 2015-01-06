@@ -1,6 +1,6 @@
 div(ng-controller="weiboCtrl" data-ng-init="initWeibo()")
     md-content.md-padding
-        md-card.md-whiteframe-z1.md-padding(ng-repeat="weibo in weibos")
+        md-card.md-whiteframe-z1.md-padding(ng-repeat="weibo in weibos.list")
             md-content
                 p {{ weibo.content }}
                 p {{ weibo.createdAt }}

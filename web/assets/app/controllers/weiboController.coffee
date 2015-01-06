@@ -1,5 +1,5 @@
 controller
-  .controller 'weiboCtrl', ['$scope', '$state', '$cookieStore', 'authService', 'weiboService', ($scope, $state, $cookieStore, authService, weiboService, Weibos) ->
+  .controller 'weiboCtrl', ['$scope', '$state', '$cookieStore', 'authService', 'weiboService', 'Weibos', ($scope, $state, $cookieStore, authService, weiboService, Weibos) ->
       if authService.auth() == undefined
         $state.go 'auth'
 
@@ -14,5 +14,8 @@ controller
             if err
               alert '加载微博出错：' + err
             else
-              $scope.weibos = data
+              Weibos.list = data
+              console.log Weibos
+              console.log $scope.weibos
+              console.log $scope.weibos.list
     ]

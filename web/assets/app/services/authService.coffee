@@ -27,8 +27,19 @@ service
                 result : false
                 info : data.info
 
-      logout : ->
-        console.log 'logout'
+      logout : (auth, callback) ->
+        $http({
+          url : "http://localhost:8080/users/#{auth.uid}/logout"
+          method : 'POST'
+          params : {
+            token : auth.token
+          }
+        })
+        .success (data, status) ->
+          callback()
+        .error (data, status) ->
+          alert "注销失败"
+
 
       auth : ->
         $cookieStore.get 'weibo.auth'

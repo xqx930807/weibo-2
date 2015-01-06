@@ -1,0 +1,9 @@
+{
+  "name": "weibo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lomanyong/weibo",
+  "authors": [
+    "Yong <lomanyong#gmail.com>"
+  ],
+  "license": "MIT"
+}

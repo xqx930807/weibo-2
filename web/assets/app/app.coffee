@@ -1,5 +1,5 @@
 app = angular.module 'weiboApp', [
-  'ngRoute', 'ngCookies', 'ui.router', 'ngMaterial', 'weiboApp.controllers', 'weiboApp.services', 'weibbApp.directives'
+  'ngRoute', 'ngCookies', 'ui.router', 'ngMaterial', 'weiboApp.controllers', 'weiboApp.services', 'weibbApp.directives', 'weiboApp.factories'
 ]
 
 .run [
@@ -11,7 +11,7 @@ app = angular.module 'weiboApp', [
 ]
 
 .config ($httpProvider) ->
-    $httpProvider.interceptors.push ($location, $q) ->
+    $httpProvider.interceptors.push ($location, $rootScope, $q) ->
       {
         'response' : (response) ->
           response or $q.when response
@@ -34,6 +34,7 @@ app = angular.module 'weiboApp', [
             controller : 'navContentCtrl'
           'navbar' :
             templateUrl : 'assets/app/views/navbar.index.html'
+            controller : 'navbarCtrl'
           'content' :
             templateUrl : "assets/app/views/content.html"
             controller : 'weiboCtrl'
@@ -51,9 +52,6 @@ app = angular.module 'weiboApp', [
       }
 ]
 
-.factory 'Weibos', () ->
-  return []
-
 .run ($rootScope, $state, $cookieStore) ->
   $state.go('index')
   $cookieStore.remove 'weibo.auth'
@@ -64,3 +62,4 @@ root = window ? this
 root.controller = angular.module 'weiboApp.controllers', []
 root.service = angular.module 'weiboApp.services', []
 root.directive = angular.module 'weibbApp.directives', []
+root.factory = angular.module 'weiboApp.factories', []

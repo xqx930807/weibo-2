@@ -1,0 +1,17 @@
+{
+  "name": "weibo",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "connect": "~3.3.3",
+    "serve-static": "~1.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "author": "Yong <lomanyong#gmail.com>",
+  "license": "MIT"
+}

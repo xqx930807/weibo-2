@@ -1,6 +1,7 @@
 package com.tjumis.microblog.dao;
 
 import com.tjumis.microblog.model.IWeibo;
+import com.tjumis.microblog.model.VWeibo;
 import com.tjumis.microblog.model.Weibo;
 import com.tjumis.microblog.utils.StringUtils;
 import com.tjumis.microblog.utils.TimeUtils;

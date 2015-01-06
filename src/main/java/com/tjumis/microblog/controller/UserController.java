@@ -1,11 +1,9 @@
 package com.tjumis.microblog.controller;
 
+import com.tjumis.microblog.dao.CommentDao;
 import com.tjumis.microblog.dao.UserDao;
 import com.tjumis.microblog.dao.WeiboDao;
-import com.tjumis.microblog.model.AuthErrorResponse;
-import com.tjumis.microblog.model.ResultResponse;
-import com.tjumis.microblog.model.User;
-import com.tjumis.microblog.model.VUser;
+import com.tjumis.microblog.model.*;
 import com.tjumis.microblog.utils.SecurityUtils;
 import com.tjumis.microblog.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +25,8 @@ public class UserController {
     UserDao mUserDao;
     @Autowired
     WeiboDao mWeiboDao;
+    @Autowired
+    CommentDao mCommentDao;
 
     @RequestMapping(value = "/users/list", method = RequestMethod.GET)
     @ResponseBody
@@ -59,7 +60,14 @@ public class UserController {
             user.setToken(generateToken(user.getEmail()));
             mUserDao.updateToken(user);
             VUser vuser = new VUser(user);
-            vuser.setWeibos(mWeiboDao.getUserWeibo(String.valueOf(user.getId())));
+            List<Weibo> tmp = mWeiboDao.getUserWeibo(String.valueOf(user.getId()));
+            List<VWeibo> result = new ArrayList<VWeibo>();
+            for (Weibo weibo : tmp) {
+                VWeibo vWeibo = new VWeibo(weibo);
+                vWeibo.setComments(mCommentDao.getCommentList(String.valueOf(vWeibo.getId())));
+                result.add(vWeibo);
+            }
+            vuser.setWeibos(result);
             return new ResponseEntity<Object>(vuser, HttpStatus.OK);
         } else {
             return new ResponseEntity<Object>(
@@ -136,7 +144,14 @@ public class UserController {
         User want = mUserDao.findUserByUid(tid);
         VUser vuser = new VUser(want);
         vuser.setToken("");
-        vuser.setWeibos(mWeiboDao.getUserWeibo(String.valueOf(want.getId())));
+        List<Weibo> tmp = mWeiboDao.getUserWeibo(uid);
+        List<VWeibo> result = new ArrayList<VWeibo>();
+        for (Weibo weibo : tmp) {
+            VWeibo vWeibo = new VWeibo(weibo);
+            vWeibo.setComments(mCommentDao.getCommentList(String.valueOf(vWeibo.getId())));
+            result.add(vWeibo);
+        }
+        vuser.setWeibos(result);
         return new ResponseEntity<Object>(vuser, HttpStatus.OK);
     }
 

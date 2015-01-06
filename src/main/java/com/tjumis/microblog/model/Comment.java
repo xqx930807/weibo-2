@@ -1,38 +1,44 @@
 package com.tjumis.microblog.model;
 
-import java.util.List;
+import javax.persistence.*;
 
 /**
- * Created by yong.h on 15/1/3.
+ * Created by yong.h on 15/1/6.
  */
-public class VWeibo {
+@Entity
+@Table(name = "WB_COMMENTS")
+public class Comment {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "uid")
     private long uid;
+    @Column(name = "wid")
+    private long wid;
+    @Column(name = "content")
     private String content;
-    private String image;
+    @Column(name = "created_at")
     private String createdAt;
+    @Column(name = "deleted_at")
     private String deletedAt;
+
     private String nickname;
     private String avatar;
-    private List<Comment> comments;
 
-    public VWeibo(Weibo weibo) {
-        this.id = weibo.getId();
-        this.uid = weibo.getUid();
-        this.content = weibo.getContent();
-        this.image = weibo.getImage();
-        this.createdAt = weibo.getCreatedAt();
-        this.deletedAt = weibo.getDeletedAt();
-        this.nickname = weibo.getNickname();
-        this.avatar = weibo.getAvatar();
+    public Comment() {
+
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
+    public Comment(long id, long uid, long wid, String content, String createdAt, String deletedAt, String nickname, String avatar) {
+        this.id = id;
+        this.uid = uid;
+        this.wid = wid;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.deletedAt = deletedAt;
+        this.nickname = nickname;
+        this.avatar = avatar;
     }
 
     public long getId() {
@@ -51,20 +57,20 @@ public class VWeibo {
         this.uid = uid;
     }
 
+    public long getWid() {
+        return wid;
+    }
+
+    public void setWid(long wid) {
+        this.wid = wid;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getCreatedAt() {

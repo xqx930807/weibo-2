@@ -1,5 +1,6 @@
 package com.tjumis.microblog.controller;
 
+import com.tjumis.microblog.dao.CommentDao;
 import com.tjumis.microblog.dao.RelationDao;
 import com.tjumis.microblog.dao.UserDao;
 import com.tjumis.microblog.dao.WeiboDao;
@@ -31,6 +32,8 @@ public class WeiboController {
     private RelationDao mRelationDao;
     @Autowired
     private UserDao mUserDao;
+    @Autowired
+    private CommentDao mCommentDao;
 
     @RequestMapping(value = "/users/{uid}/timeline", method = RequestMethod.GET)
     @ResponseBody
@@ -43,7 +46,14 @@ public class WeiboController {
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
         }
-        return mWeiboDao.getUserTimeline(mRelationDao.getUserFollowed(uid));
+        List<Weibo> tmp = mWeiboDao.getUserTimeline(mRelationDao.getUserFollowed(uid));
+        List<VWeibo> result = new ArrayList<VWeibo>();
+        for (Weibo weibo : tmp) {
+            VWeibo vWeibo = new VWeibo(weibo);
+            vWeibo.setComments(mCommentDao.getCommentList(String.valueOf(vWeibo.getId())));
+            result.add(vWeibo);
+        }
+        return result;
     }
 
     @RequestMapping(value = "/users/{uid}/weibo", method = RequestMethod.GET)
@@ -57,7 +67,14 @@ public class WeiboController {
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
         }
-        return mWeiboDao.getUserWeibo(uid);
+        List<Weibo> tmp = mWeiboDao.getUserWeibo(uid);
+        List<VWeibo> result = new ArrayList<VWeibo>();
+        for (Weibo weibo : tmp) {
+            VWeibo vWeibo = new VWeibo(weibo);
+            vWeibo.setComments(mCommentDao.getCommentList(String.valueOf(vWeibo.getId())));
+            result.add(vWeibo);
+        }
+        return result;
     }
 
     @RequestMapping(value = "/users/{uid}/weibo", method = RequestMethod.POST)
@@ -123,10 +140,53 @@ public class WeiboController {
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
         }
-        List<Weibo> weibos = new ArrayList<Weibo>();
+        List<Weibo> weibos;
+        List<VWeibo> result = new ArrayList<VWeibo>();
         if (query != null && !query.equals("")) {
             weibos = mWeiboDao.searchWeibo(query);
+            for (Weibo weibo : weibos) {
+                VWeibo vWeibo = new VWeibo(weibo);
+                vWeibo.setComments(mCommentDao.getCommentList(String.valueOf(vWeibo.getId())));
+                result.add(vWeibo);
+            }
         }
-        return new ResponseEntity<Object>(weibos, HttpStatus.OK);
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/{uid}/weibo/{wid}/comment", method = RequestMethod.POST)
+    @ResponseBody
+    public Object comment(
+            @PathVariable(value = "uid")String uid,
+            @PathVariable(value = "wid")String wid,
+            @RequestParam(value = "content")String content,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        String time = TimeUtils.format();
+        long id = mCommentDao.addComment(wid, uid, content, time);
+        return new ResponseEntity<Object>(
+                new ResultResponse(ResultResponse.STATUS_OK, id + ":" + time),
+                HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/{uid}/weibo/{wid}/comment/{cid}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deleteComment(
+            @PathVariable(value = "uid")String uid,
+            @PathVariable(value = "wid")String wid,
+            @PathVariable(value = "cid")String cid,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        mCommentDao.deleteComment(cid);
+        return new ResponseEntity<Object>(new ResultResponse(ResultResponse.STATUS_OK, "删除成功"), HttpStatus.OK);
     }
 }

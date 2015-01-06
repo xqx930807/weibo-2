@@ -17,7 +17,7 @@ public class VUser {
     private String signature;
     private String createdAt;
 
-    private List<Weibo> weibos;
+    private List<VWeibo> weibos;
 
     public String getSignature() {
         return signature;
@@ -91,11 +91,11 @@ public class VUser {
         this.createdAt = createdAt;
     }
 
-    public List<Weibo> getWeibos() {
+    public List<VWeibo> getWeibos() {
         return this.weibos;
     }
 
-    public void setWeibos(List<Weibo> weibos) {
+    public void setWeibos(List<VWeibo> weibos) {
         this.weibos = weibos;
     }
 

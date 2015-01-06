@@ -1,5 +1,7 @@
 package com.tjumis.microblog.model;
 
+import com.tjumis.microblog.utils.SecurityUtils;
+
 import javax.persistence.*;
 
 /**
@@ -32,7 +34,7 @@ public class User {
     private String createdAt;
 
     public boolean checkPassword(String _password) {
-        return this.password.equals(_password);
+        return this.password.equals(SecurityUtils.md5(_password));
     }
 
     public boolean checkToken(String token) {

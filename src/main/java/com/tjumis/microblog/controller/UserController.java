@@ -108,7 +108,7 @@ public class UserController {
         User user = new User();
         user.setEmail(email);
         user.setNickname(nickname);
-        user.setPassword(SecurityUtils.SHA1(password));
+        user.setPassword(SecurityUtils.md5(password));
         user.setCreatedAt(TimeUtils.format());
         mUserDao.addUser(user);
         return new ResponseEntity<Object>(

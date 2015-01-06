@@ -169,7 +169,7 @@ public class WeiboController {
         String time = TimeUtils.format();
         long id = mCommentDao.addComment(wid, uid, content, time);
         return new ResponseEntity<Object>(
-                new ResultResponse(ResultResponse.STATUS_OK, id + ":" + time),
+                new ResultResponse(ResultResponse.STATUS_OK, id + ">" + time),
                 HttpStatus.OK);
     }
 

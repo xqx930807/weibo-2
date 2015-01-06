@@ -130,7 +130,22 @@ public class UserController {
                         HttpStatus.FORBIDDEN);
     }
 
-    @RequestMapping("/users/{uid}/user/{tid}")
+    @RequestMapping(value = "/users/{uid}/profile", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUserProfile(@PathVariable(value = "uid")String uid,
+            @RequestParam(value = "token")String token) {
+        User user = mUserDao.findUserByUid(uid);
+        if (user == null || ! user.checkToken(token)) {
+            return new ResponseEntity<Object>(
+                    new AuthErrorResponse(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        VUser vuser = new VUser(user);
+        return new ResponseEntity<Object>(vuser, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/{uid}/user/{tid}", method = RequestMethod.GET)
+    @ResponseBody
     public Object getUserInfo(
             @PathVariable(value = "uid")String uid,
             @PathVariable(value = "tid")String tid,

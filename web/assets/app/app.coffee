@@ -30,7 +30,7 @@ app = angular.module 'weiboApp', [
         url : '/',
         views : {
           'navcontent' :
-            templateUrl : 'assets/app/views/navcontent.html'
+            templateUrl : 'assets/app/views/navcontent.index.html'
             controller : 'navContentCtrl'
           'navbar' :
             templateUrl : 'assets/app/views/navbar.index.html'
@@ -44,11 +44,25 @@ app = angular.module 'weiboApp', [
       .state 'auth', {
         url : '/users/login'
         views :
+          'navcontent' :
+            templateUrl : 'assets/app/views/navcontent.normal.html'
           'navbar' :
             template : "<span>请登录 >></span>"
           'content' :
             templateUrl : "assets/app/views/login.html"
             controller : "loginCtrl"
+      }
+
+      .state 'register', {
+        url : '/users/register'
+        views :
+          'navcontent' :
+            templateUrl : 'assets/app/views/navcontent.normal.html'
+          'navbar' :
+            template : "<span>注册 >></span>"
+          'content' :
+            templateUrl : "assets/app/views/register.html"
+            controller : "registerCtrl"
       }
 ]
 

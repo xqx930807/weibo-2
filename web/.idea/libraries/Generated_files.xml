@@ -11,7 +11,9 @@
         <item url="file://$PROJECT_DIR$/assets/app/test.js" />
         <item url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/app.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/factories/configFactory.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/registerController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/services/weiboService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/factories/weiboFactory.js" />
@@ -30,6 +32,8 @@
       <root url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/app.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/factories/configFactory.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/registerController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/services/weiboService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/factories/weiboFactory.js" />

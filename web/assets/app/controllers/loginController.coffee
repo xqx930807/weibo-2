@@ -56,5 +56,6 @@ controller
         hideDelay : 3000
         position : $scope.getToastPosition()
 
-
+    $scope.register = ->
+      $state.go 'register'
   ]

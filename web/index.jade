@@ -16,23 +16,24 @@ html(ng-app="weiboApp")
         script(src="/assets/bower_components/angular-resource/angular-resource.min.js")
         script(src="/assets/app/app.js")
         script(src="/assets/app/directives/configDirective.js")
-        script(src="/assets/app/services/configService.js")
         script(src="/assets/app/services/authService.js")
         script(src="/assets/app/services/searchService.js")
         script(src="/assets/app/services/weiboService.js")
         script(src="/assets/app/factories/weiboFactory.js")
+        script(src="/assets/app/factories/configFactory.js")
         script(src="/assets/app/controllers/loginController.js")
         script(src="/assets/app/controllers/navigationController.js")
         script(src="/assets/app/controllers/weiboController.js")
         script(src="/assets/app/controllers/toastController.js")
         script(src="/assets/app/controllers/navContentController.js")
         script(src="/assets/app/controllers/navbarController.js")
+        script(src="/assets/app/controllers/registerController.js")
 
 body(layout="row")
     md-sidenav.md-sidenav-left.md-whiteframe-z2.md-locked-open(layout="column" md-component-id="left" style="overflow: hidden; display: flex;" md-is-locked-open="true")
         md-toolbar.md-default-theme.md-whiteframe-z1
             .md-toolbar-tools
-                span MIS Weibo
+                span(app-name)
 
         div(ui-view="navcontent")
 

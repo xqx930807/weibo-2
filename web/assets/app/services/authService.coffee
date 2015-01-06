@@ -40,8 +40,25 @@ service
         .error (data, status) ->
           alert "注销失败"
 
-
       auth : ->
         $cookieStore.get 'weibo.auth'
+
+      register : (email, nickname, password, callback) ->
+        $http({
+          url : "http://localhost:8080/users/register"
+          method : 'POST'
+          params : {
+            email : email
+            nickname : nickname
+            password : password
+          }
+        })
+        .success (data, status) ->
+          callback()
+        .error (data, status) ->
+          if data.info != undefined
+            alert "注册失败：" + data.info
+          else
+            alert "注册失败：未知错误"
     }
   ]

@@ -1,0 +1,9 @@
+div(layout="column" ng-controller="registerCtrl")
+    md-content.md-padding(style="margin-left: 100px;")
+        form(role='form' name='registerForm')
+            div(layout="column" align="center")
+                md-text-float(label="邮箱" ng-model="info.email" name="email", required, autofocus)
+                md-text-float(label="昵称" ng-model="info.nickname" name="nickname" required)
+                md-text-float(label="密码" ng-model="info.password" type="password" name="password" required)
+                md-text-float(label="重复密码" ng-model="info.repeatPassword" type="password" required)
+                md-button.md-primary.md-button(style="width: 200px;" ng-click="register()", ng-disabled="!registerForm.$valid") 注册

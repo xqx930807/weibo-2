@@ -1,3 +1,10 @@
-md-content.md-padding.md-default-theme(layout="column" ng-controller="navContentCtrl")
-    img(ng-show="userprofile.avatar != null" src="{{ userprofile.avatar }}")
+md-content.md-padding.md-default-theme(layout="column" ng-controller="navContentCtrl" align="center")
+    div(ng-click="openAvatarUploadModal()")
+        img.nav-content-avatar(ng-show="userprofile.avatar != null" src="http://localhost:8080{{ userprofile.avatar }}")
+        span.nav-content-info(ng-show="userprofile.avatar == null") 暂时还没有头像哦，点这上传头像！
     h1(ng-model="userprofile.nickname") {{ userprofile.nickname }}
+    p.nav-content-profile(ng-click="updateInfo('signature')") 签名：{{ userprofile.signature }}
+    p.nav-content-profile(ng-click="updateInfo('location')") 位于：{{ userprofile.location }}
+    p.nav-content-profile 注册时间：{{ userprofile.createdAt }}
+    p.nav-content-info 小提示：点击资料可以进行修改哦~
+    md-button.md-primary.md-raised.nav-content-post(ng-click="openWeiboModal()") 发微博

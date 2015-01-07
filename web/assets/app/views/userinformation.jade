@@ -1,5 +1,15 @@
-div(ng-controller="weiboCtrl" data-ng-init="initWeibo()")
+div(ng-controller="userInformationCtrl" data-ng-init="initInfo()")
     md-content.md-padding
+        div
+            md-card.md-whiteframe-z1
+                div(layout="row")
+                    h2 @{{ userprofile.nickname }}
+                div(layout="column")
+                    p 个性签名：{{ userprofile.signature }}
+                    p 来自 {{ userprofile.location }}
+                div(style="margin-top: 20px;")
+                    md-button.md-primary.md-raised(style="width: 70px;") {{ userprofile.buttoninfo }}
+
         div(style="margin-top: 30px;" ng-repeat="weibo in weibos.list")
             md-card.md-whiteframe-z1
                 md-content
@@ -20,3 +30,7 @@ div(ng-controller="weiboCtrl" data-ng-init="initWeibo()")
                         strong 暂时没有评论
                     div(layout="row")
                         md-button.md-primary.md-raised(style="width: 70px;" ng-click="postComment($index)") 评论
+                        md-button.md-warn.md-raised(style="width: 70px; margin-left: 20px;" ng-show="weibo.uid == uid" ng-click="deleteWeibo($index)") 删除
+        div(ng-if="weibos.list.length == 0")
+            md-card.md-whiteframe-z1(style="margin-top: 30px;")
+                strong TA还没有发过微博哦！

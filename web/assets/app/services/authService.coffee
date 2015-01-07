@@ -60,5 +60,15 @@ service
             alert "注册失败：" + data.info
           else
             alert "注册失败：未知错误"
+
+      profile : (auth, callback) ->
+        $http.get("http://localhost:8080/users/#{auth.uid}/profile?token=#{auth.token}")
+          .success (data, status) ->
+            callback null, data
+          .error (data, status) ->
+            callback data, null
+
+      updateAvatar : () ->
+        console.log 'update avatar'
     }
   ]

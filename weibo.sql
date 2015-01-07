@@ -11,11 +11,25 @@
  Target Server Version : 50614
  File Encoding         : utf-8
 
- Date: 01/05/2015 20:43:02 PM
+ Date: 01/07/2015 11:38:18 AM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `wb_comments`
+-- ----------------------------
+DROP TABLE IF EXISTS `wb_comments`;
+CREATE TABLE `wb_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `wid` int(11) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `created_at` varchar(255) DEFAULT NULL,
+  `deleted_at` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `wb_relations`
@@ -27,7 +41,7 @@ CREATE TABLE `wb_relations` (
   `fid` int(11) DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `wb_users`
@@ -45,7 +59,7 @@ CREATE TABLE `wb_users` (
   `signature` varchar(255) DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `wb_weibo`
@@ -59,6 +73,6 @@ CREATE TABLE `wb_weibo` (
   `created_at` varchar(255) DEFAULT NULL,
   `deleted_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

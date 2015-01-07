@@ -2,16 +2,19 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
         <item url="file://$PROJECT_DIR$/server.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/services/userService.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/userInformationController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/toastController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/test.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/postWeiboController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
         <item url="file://$PROJECT_DIR$/assets/app/app.js" />
         <item url="file://$PROJECT_DIR$/assets/app/factories/configFactory.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/controllers/uploadModalController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/registerController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />
@@ -23,15 +26,20 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
       <root url="file://$PROJECT_DIR$/server.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/services/userService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/toastController.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/userInformationController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/test.js" />
       <root url="file://$PROJECT_DIR$/assets/app/services/authService.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/postWeiboController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/app.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/navContentController.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/controllers/uploadModalController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/factories/configFactory.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/registerController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/weiboController.js" />

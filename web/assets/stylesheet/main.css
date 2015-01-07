@@ -1,0 +1,35 @@
+.nav-content-avatar {
+    width : 80px;
+    height: 80px;
+    border-radius: 50px;
+}
+.nav-content-profile {
+    font-size: 14px;
+}
+.nav-content-info {
+    color: #a4a4a4;
+    font-size: 12px;
+}
+.nav-content-post {
+    height : 40px;
+    margin-top: 60px;
+}
+div.weibo-content-header {
+    float: right;
+    margin-left: 20px;
+}
+span.weibo-content-header {
+    color: #555555;
+    font-size: 14px;
+}
+span.weibo-content-content-second {
+    color: #a4a4a4;
+    font-size: 10px;
+}
+.weibo-content-content {
+    font-size: 22px;
+}
+.weibo-comments-header {
+    color: #555555;
+    font-size: 18px;
+}

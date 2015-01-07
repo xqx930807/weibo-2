@@ -1,4 +1,4 @@
 div(layout="row" ng-controller="navbarCtrl" flex)
-    md-input(label="微博搜索" placeholder="微博搜索" name="query" ng-model="query" ng-change="search()")
+    input.form-control(label="微博搜索" placeholder="微博搜索" name="query" ng-model="query" ng-change="search()" style="width: 250px;")
     div(flex)
     md-button.md-warn(ng-click="logout()") 注销

@@ -1,0 +1,9 @@
+div.modal-header
+    h3 上传图片
+div.modal-body
+    form(role='form' name='uploadForm' enctype="multipart/form-data" ng-submit="upload()")
+        .form-group
+            label(for="avatar") 选择头像
+            input(id="avatar" type="file" ng-file-select="onFileSelect($files)")
+        md-button.md-raised.md-primary(type="submit" style="float: right; margin-bottom: 20px;") 上传
+    p 这里可以上传头像哟

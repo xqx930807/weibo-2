@@ -1,5 +1,5 @@
 app = angular.module 'weiboApp', [
-  'ngRoute', 'ngCookies', 'ui.router', 'ngMaterial', 'weiboApp.controllers', 'weiboApp.services', 'weibbApp.directives', 'weiboApp.factories'
+  'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap', 'ngMaterial', 'weiboApp.controllers', 'weiboApp.services', 'weibbApp.directives', 'weiboApp.factories'
 ]
 
 .run [
@@ -64,11 +64,26 @@ app = angular.module 'weiboApp', [
             templateUrl : "assets/app/views/register.html"
             controller : "registerCtrl"
       }
+
+      .state 'users', {
+        url : '/users/:id/information'
+        views :
+          'navcontent' :
+            templateUrl : 'assets/app/views/navcontent.index.html'
+            controller : 'navContentCtrl'
+          'navbar' :
+            templateUrl : 'assets/app/views/navbar.index.html'
+            controller : 'navbarCtrl'
+          'content' :
+            templateUrl : "assets/app/views/userinformation.html"
+            controller : 'userInformationCtrl'
+
+      }
 ]
 
 .run ($rootScope, $state, $cookieStore) ->
   $state.go('index')
-  $cookieStore.remove 'weibo.auth'
+  #$cookieStore.remove 'weibo.auth'
   $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
 
 root = window ? this

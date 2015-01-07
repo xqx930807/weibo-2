@@ -1,12 +1,14 @@
 doctype html
 html(ng-app="weiboApp")
     head(lang="en")
-        meta(charset="UTF8")
-        title MIS Weibo
+        meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+        title 一个微博
         link(rel="stylesheet" href="/assets/stylesheet/main.css")
+        link(rel="stylesheet" href="/assets/bower_components/bootstrap/dist/css/bootstrap.min.css")
         link(rel="stylesheet" href="/assets/bower_components/angular-material/angular-material.min.css")
         script(src="/assets/bower_components/hammerjs/hammer.min.js")
         script(src="/assets/bower_components/angular/angular.min.js")
+        script(src="/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")
         script(src="/assets/bower_components/angular-animate/angular-animate.min.js")
         script(src="/assets/bower_components/angular-aria/angular-aria.min.js")
         script(src="/assets/bower_components/angular-material/angular-material.min.js")
@@ -19,6 +21,7 @@ html(ng-app="weiboApp")
         script(src="/assets/app/services/authService.js")
         script(src="/assets/app/services/searchService.js")
         script(src="/assets/app/services/weiboService.js")
+        script(src="/assets/app/services/userService.js")
         script(src="/assets/app/factories/weiboFactory.js")
         script(src="/assets/app/factories/configFactory.js")
         script(src="/assets/app/controllers/loginController.js")
@@ -28,12 +31,16 @@ html(ng-app="weiboApp")
         script(src="/assets/app/controllers/navContentController.js")
         script(src="/assets/app/controllers/navbarController.js")
         script(src="/assets/app/controllers/registerController.js")
+        script(src="/assets/app/controllers/uploadModalController.js")
+        script(src="/assets/app/controllers/postWeiboController.js")
+        script(src="/assets/app/controllers/userInformationController.js")
 
 body(layout="row")
     md-sidenav.md-sidenav-left.md-whiteframe-z2.md-locked-open(layout="column" md-component-id="left" style="overflow: hidden; display: flex;" md-is-locked-open="true")
         md-toolbar.md-default-theme.md-whiteframe-z1
             .md-toolbar-tools
-                span(app-name)
+                a(href="#/")
+                    span(app-name)
 
         div(ui-view="navcontent")
 
@@ -41,5 +48,3 @@ body(layout="row")
         md-toolbar.md-default-theme.md-whiteframe-z1(layout="column")
             div.md-toolbar-tools(ui-view="navbar")
         div(ui-view="content")
-        div
-            a(href="#/users/login") /users/login

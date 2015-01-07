@@ -16,6 +16,24 @@ public class VUser {
     private String location;
     private String signature;
     private String createdAt;
+    private boolean isFan;
+    private boolean isFollowed;
+
+    public boolean isFan() {
+        return isFan;
+    }
+
+    public void setFan(boolean isFan) {
+        this.isFan = isFan;
+    }
+
+    public boolean isFollowed() {
+        return isFollowed;
+    }
+
+    public void setFollowed(boolean isFollowed) {
+        this.isFollowed = isFollowed;
+    }
 
     private List<VWeibo> weibos;
 

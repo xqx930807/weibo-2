@@ -23,6 +23,14 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
                 <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
             </list>
         </property>
@@ -57,6 +65,9 @@
             <props>
                 <prop key="hibernate.dialect">${jdbc.dialect}</prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">utf8</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/weibo?useUnicode=true&amp;characterEncoding=utf8</prop>
             </props>
         </property>
         <property name="packagesToScan" value="com.tjumis.microblog.model" />

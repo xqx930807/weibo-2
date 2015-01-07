@@ -30,10 +30,14 @@ public class CommentDao {
         return (Long) sessionFactory.getCurrentSession().save(comment);
     }
 
-    public void deleteComment(String id) {
+    public boolean deleteComment(String id, String uid) {
         IComment comment = findCommentById(id);
+        if (comment.getUid() != Long.valueOf(uid)) {
+            return false;
+        }
         comment.setDeletedAt(TimeUtils.format());
         sessionFactory.getCurrentSession().update(comment);
+        return true;
     }
 
     public IComment findCommentById(String id) {

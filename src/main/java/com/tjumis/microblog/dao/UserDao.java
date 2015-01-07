@@ -42,6 +42,18 @@ public class UserDao {
         sessionFactory.close();
     }
 
+    public void updateProfile(User user, String query, String content) {
+        if (query.equals("location")) {
+            user.setLocation(content);
+        } else if (query.equals("signature")) {
+            user.setSignature(content);
+        } else {
+            return;
+        }
+        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.close();
+    }
+
     /**
      * 添加一个用户，即注册
      * @param user

@@ -23,16 +23,36 @@ public class WeiboDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void addWeibo(IWeibo weibo) {
-        sessionFactory.getCurrentSession().save(weibo);
+    /**
+     * 添加微博
+     * @param weibo 新的微博实例
+     * @return 新微博id
+     */
+    public long addWeibo(IWeibo weibo) {
+        return (Long) sessionFactory.getCurrentSession().save(weibo);
     }
 
-    public void deleteWeibo(String id) {
+    /**
+     * 删除微博
+     * @param id 微博id
+     * @param uid 用户id
+     * @return 删除结果
+     */
+    public boolean deleteWeibo(String id, String uid) {
         IWeibo weibo = findWeiboById(id);
+        if (weibo.getUid() != Long.valueOf(uid)) {
+            return false;
+        }
         weibo.setDeletedAt(TimeUtils.format());
         sessionFactory.getCurrentSession().update(weibo);
+        return true;
     }
 
+    /**
+     * 获取指定用户的微博列表
+     * @param uid userid
+     * @return 微博列表
+     */
     @SuppressWarnings("unchecked")
     public List<Weibo> getUserWeibo(String uid) {
         String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"
@@ -43,14 +63,29 @@ public class WeiboDao {
         return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Weibo.class).list();
     }
 
+    /**
+     * 获取用户时间轴微博列表
+     * @param ids 好友id
+     * @return 微博列表
+     */
     public List<Weibo> getUserTimeline(String[] ids) {
         return getUserTimeline(StringUtils.sqlJoin(ids, ","));
     }
 
+    /**
+     * 获取用户时间轴微博列表
+     * @param ids 好友id
+     * @return 微博列表
+     */
     public List<Weibo> getUserTimeline(List<Object> ids) {
         return getUserTimeline(StringUtils.sqlJoin(ids, ","));
     }
 
+    /**
+     * 获取用户时间轴微博列表
+     * @param ids 好友id
+     * @return 微博列表
+     */
     @SuppressWarnings("unchecked")
     public List<Weibo> getUserTimeline(String ids) {
         String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"
@@ -62,12 +97,22 @@ public class WeiboDao {
         return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Weibo.class).list();
     }
 
+    /**
+     * 根据指定id找到微博
+     * @param id 微博id
+     * @return 微博实例
+     */
     public IWeibo findWeiboById(String id) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(IWeibo.class);
         c.add(Restrictions.eq("id", Long.valueOf(id)));
         return (IWeibo) c.list().get(0);
     }
 
+    /**
+     * 微博搜索
+     * @param query 搜索字段
+     * @return 微博列表
+     */
     @SuppressWarnings("unchecked")
     public List<Weibo> searchWeibo(String query) {
         String sql = "select w.id, w.uid, w.content, w.image, w.created_at, w.deleted_at, u.nickname, u.avatar"

@@ -5,6 +5,36 @@
 
 	<display-name>MIS Weibo</display-name>
 
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>com.tjumis.microblog.CORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <servlet-name>mvc-dispatcher</servlet-name>
+    </filter-mapping>
+
     <servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -20,13 +50,5 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-    <filter>
-        <filter-name>cors</filter-name>
-        <filter-class>com.tjumis.microblog.CORSFilter</filter-class>
-    </filter>
 
-    <filter-mapping>
-        <filter-name>cors</filter-name>
-        <servlet-name>mvc-dispatcher</servlet-name>
-    </filter-mapping>
 </web-app>

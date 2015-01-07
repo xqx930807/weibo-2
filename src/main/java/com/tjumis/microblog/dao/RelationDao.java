@@ -49,6 +49,20 @@ public class RelationDao {
         return sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(Relation.class).list();
     }
 
+    public boolean isFan(String uid, String fid) {
+        Criteria c = sessionFactory.getCurrentSession().createCriteria(IRelation.class);
+        c.add(Restrictions.eq("fid", Long.valueOf(uid)));
+        c.add(Restrictions.eq("uid", Long.valueOf(fid)));
+        return c.list().size() != 0;
+    }
+
+    public boolean isFollowed(String uid, String fid) {
+        Criteria c = sessionFactory.getCurrentSession().createCriteria(IRelation.class);
+        c.add(Restrictions.eq("uid", Long.valueOf(uid)));
+        c.add(Restrictions.eq("fid", Long.valueOf(fid)));
+        return c.list().size() != 0;
+    }
+
     public void foOrUnfo(String uid, String fid) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(IRelation.class);
         c.add(Restrictions.eq("uid", Long.valueOf(uid)));

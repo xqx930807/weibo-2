@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,12 @@ public class WeiboController {
     @Autowired
     private CommentDao mCommentDao;
 
+    /**
+     * 获取用户时间轴微博
+     * @param uid userid
+     * @param token 验证令牌
+     * @return 微博列表
+     */
     @RequestMapping(value = "/users/{uid}/timeline", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserTimeline(
@@ -56,6 +63,12 @@ public class WeiboController {
         return result;
     }
 
+    /**
+     * 获取指定用户的微博
+     * @param uid userid
+     * @param token 验证令牌
+     * @return 微博列表
+     */
     @RequestMapping(value = "/users/{uid}/weibo", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserWeibo(
@@ -77,13 +90,23 @@ public class WeiboController {
         return result;
     }
 
+    /**
+     * 发微博
+     * @param uid userid
+     * @param token 验证令牌
+     * @param content 微博内容
+     * @param file 上传图片
+     * @param request 请求实例
+     * @return 新微博对应的id
+     * @throws IOException
+     */
     @RequestMapping(value = "/users/{uid}/weibo", method = RequestMethod.POST)
     @ResponseBody
     public Object postNewWeibo(
             @PathVariable(value = "uid")String uid,
             @RequestParam(value = "token")String token,
             @RequestParam(value = "content")String content,
-            @RequestParam(value = "image")MultipartFile file,
+            @RequestParam(value = "image", required=false)MultipartFile file,
             HttpServletRequest request) throws IOException{
         User user = mUserDao.findUserByUid(uid);
         if (user == null || ! user.checkToken(token)) {
@@ -104,12 +127,19 @@ public class WeiboController {
                 weibo.setImage("/upload/" + filename);
             }
         }
-        mWeiboDao.addWeibo(weibo);
+        long wid = mWeiboDao.addWeibo(weibo);
         return new ResponseEntity<Object>(
-                new ResultResponse(ResultResponse.STATUS_OK, "发布成功"),
+                new ResultResponse(ResultResponse.STATUS_OK, String.valueOf(wid)),
                 HttpStatus.OK);
     }
 
+    /**
+     * 删除微博
+     * @param uid userid
+     * @param id 指定微博id
+     * @param token 验证令牌
+     * @return 删除结果反馈
+     */
     @RequestMapping(value = "/users/{uid}/weibo/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteWeibo(
@@ -122,12 +152,23 @@ public class WeiboController {
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
         }
-        mWeiboDao.deleteWeibo(id);
-        return new ResponseEntity<Object>(
+        boolean result = mWeiboDao.deleteWeibo(id, uid);
+        return result ? new ResponseEntity<Object>(
                 new ResultResponse(ResultResponse.STATUS_OK, "删除成功"),
-                HttpStatus.OK);
+                HttpStatus.OK)
+                :
+                new ResponseEntity<Object>(
+                        new ResultResponse(ResultResponse.STATUS_FAILED, "只能删除自己的微博"),
+                        HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * 微博搜索
+     * @param uid userid
+     * @param token 验证令牌
+     * @param query 搜索
+     * @return 微博列表
+     */
     @RequestMapping(value = "/users/{uid}/weibo/search", method = RequestMethod.GET)
     @ResponseBody
     public Object search(
@@ -153,6 +194,14 @@ public class WeiboController {
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
+    /**
+     * 评论微博
+     * @param uid userid
+     * @param wid 指定微博id
+     * @param content 评论内容
+     * @param token 验证令牌
+     * @return 新评论的id与创建时间
+     */
     @RequestMapping(value = "/users/{uid}/weibo/{wid}/comment", method = RequestMethod.POST)
     @ResponseBody
     public Object comment(
@@ -173,6 +222,14 @@ public class WeiboController {
                 HttpStatus.OK);
     }
 
+    /**
+     * 删除评论
+     * @param uid userid
+     * @param wid 指定微博id
+     * @param cid 指定评论id
+     * @param token 验证令牌
+     * @return 删除结果
+     */
     @RequestMapping(value = "/users/{uid}/weibo/{wid}/comment/{cid}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteComment(
@@ -186,7 +243,14 @@ public class WeiboController {
                     new AuthErrorResponse(),
                     HttpStatus.UNAUTHORIZED);
         }
-        mCommentDao.deleteComment(cid);
-        return new ResponseEntity<Object>(new ResultResponse(ResultResponse.STATUS_OK, "删除成功"), HttpStatus.OK);
+        boolean result = mCommentDao.deleteComment(cid, uid);
+        return result ?
+                new ResponseEntity<Object>(
+                        new ResultResponse(ResultResponse.STATUS_OK, "删除成功"),
+                        HttpStatus.OK)
+                :
+                new ResponseEntity<Object>(
+                        new ResultResponse(ResultResponse.STATUS_OK, "只能删除自己发的评论"),
+                        HttpStatus.FORBIDDEN);
     }
 }

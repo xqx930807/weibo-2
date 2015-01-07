@@ -21,6 +21,12 @@ public class RelationController {
     @Autowired
     private UserDao mUserDao;
 
+    /**
+     * 获取用户关注用户列表
+     * @param uid userid
+     * @param token 验证令牌
+     * @return 关注用户列表
+     */
     @RequestMapping(value = "/users/{uid}/followed", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserFollowedRelations(
@@ -35,6 +41,12 @@ public class RelationController {
         return mRelationDao.getUserFollowedRelations(uid);
     }
 
+    /**
+     * 获取用户粉丝列表
+     * @param uid userid
+     * @param token 验证令牌
+     * @return 用户粉丝列表
+     */
     @RequestMapping(value = "/users/{uid}/fans", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserFans(
@@ -49,6 +61,13 @@ public class RelationController {
         return mRelationDao.getUserFans(uid);
     }
 
+    /**
+     * 关注或者取消关注用户
+     * @param uid userid
+     * @param fid 目标用户id
+     * @param token 验证令牌
+     * @return 操作结果
+     */
     @RequestMapping(value = "/users/{uid}/follow/{fid}", method = RequestMethod.POST)
     @ResponseBody
     public Object follow(

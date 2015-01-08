@@ -43,6 +43,12 @@ controller
       $scope.deleteWeibo = (index) ->
         console.log 'delete weibo'
 
-      $scope.deleteComment = (index) ->
-        console.log 'delete comment'
+      $scope.deleteComment = (index, pindex) ->
+        result = confirm("确定要删除这条评论吗？")
+        if result is true
+          wid = $scope.weibos.list[pindex].id
+          cid = $scope.weibos.list[pindex].comments[index].id
+          auth = $cookieStore.get 'weibo.auth'
+          weiboService.deleteComment wid, cid, auth, (data) ->
+            $scope.weibos.list[pindex].comments.splice index, 1
     ]

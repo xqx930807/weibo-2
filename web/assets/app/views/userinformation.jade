@@ -10,7 +10,7 @@ div(ng-controller="userInformationCtrl" data-ng-init="initInfo()")
                 div(style="margin-top: 20px;")
                     md-button.md-primary.md-raised(style="width: 70px;") {{ userprofile.buttoninfo }}
 
-        div(style="margin-top: 30px;" ng-repeat="weibo in weibos.list")
+        div(style="margin-top: 30px;" ng-repeat="(weiboIndex, weibo) in weibos.list")
             md-card.md-whiteframe-z1
                 md-content
                     a(href="#/users/{{weibo.uid}}/information") @{{ weibo.nickname }}
@@ -25,12 +25,12 @@ div(ng-controller="userInformationCtrl" data-ng-init="initInfo()")
                             a(href="#/users/{{ comment.uid }}/information") @{{ comment.nickname }}
                             span &nbsp;的评论： {{ comment.content }}
                             span.weibo-content-content-second &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ AT {{ comment.createdAt }}]&nbsp;&nbsp;
-                            md-button.md-warn(ng-show="comment.uid == uid" ng-click="deleteComment($index)") 删除
+                            md-button.md-warn(ng-show="comment.uid == uid" ng-click="deleteComment($index, weiboIndex)") 删除
                     div(ng-if="weibo.comments.length == 0")
                         strong 暂时没有评论
                     div(layout="row")
                         md-button.md-primary.md-raised(style="width: 70px;" ng-click="postComment($index)") 评论
-                        md-button.md-warn.md-raised(style="width: 70px; margin-left: 20px;" ng-show="weibo.uid == uid" ng-click="deleteWeibo($index)") 删除
+                        md-button.md-warn(style="width: 70px; margin-left: 20px;" ng-show="weibo.uid == uid" ng-click="deleteWeibo($index)") 删除微博
         div(ng-if="weibos.list.length == 0")
             md-card.md-whiteframe-z1(style="margin-top: 30px;")
                 strong TA还没有发过微博哦！

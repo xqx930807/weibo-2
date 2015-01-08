@@ -95,8 +95,6 @@ public class WeiboController {
      * @param uid userid
      * @param token 验证令牌
      * @param content 微博内容
-     * @param file 上传图片
-     * @param request 请求实例
      * @return 新微博对应的id
      * @throws IOException
      */
@@ -105,9 +103,7 @@ public class WeiboController {
     public Object postNewWeibo(
             @PathVariable(value = "uid")String uid,
             @RequestParam(value = "token")String token,
-            @RequestParam(value = "content")String content,
-            @RequestParam(value = "image", required=false)MultipartFile file,
-            HttpServletRequest request) throws IOException{
+            @RequestParam(value = "content")String content) {
         User user = mUserDao.findUserByUid(uid);
         if (user == null || ! user.checkToken(token)) {
             return new ResponseEntity<Object>(
@@ -116,22 +112,46 @@ public class WeiboController {
         }
         IWeibo weibo = new IWeibo();
         weibo.setUid(Long.valueOf(uid));
-        weibo.setCreatedAt(TimeUtils.format());
+        String time = TimeUtils.format();
+        weibo.setCreatedAt(time);
         weibo.setContent(content);
-        if (file != null) {
-            if ( ! file.isEmpty()) {
-                String[] arr = file.getOriginalFilename().split("\\.");
-                String filename = SecurityUtils.SHA(arr[0] + System.currentTimeMillis()) + "." + arr[1];
-                String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
-                FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path, filename));
-                weibo.setImage("/upload/" + filename);
-            }
-        }
         long wid = mWeiboDao.addWeibo(weibo);
         return new ResponseEntity<Object>(
-                new ResultResponse(ResultResponse.STATUS_OK, String.valueOf(wid)),
+                new ResultResponse(ResultResponse.STATUS_OK, wid + ">" + time),
                 HttpStatus.OK);
     }
+//    @RequestMapping(value = "/users/{uid}/weibo", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Object postNewWeibo(
+//            @PathVariable(value = "uid")String uid,
+//            @RequestParam(value = "token")String token,
+//            @RequestParam(value = "content")String content,
+//            @RequestParam(value = "image", required=false)MultipartFile file,
+//            HttpServletRequest request) throws IOException{
+//        User user = mUserDao.findUserByUid(uid);
+//        if (user == null || ! user.checkToken(token)) {
+//            return new ResponseEntity<Object>(
+//                    new AuthErrorResponse(),
+//                    HttpStatus.UNAUTHORIZED);
+//        }
+//        IWeibo weibo = new IWeibo();
+//        weibo.setUid(Long.valueOf(uid));
+//        weibo.setCreatedAt(TimeUtils.format());
+//        weibo.setContent(content);
+//        if (file != null) {
+//            if ( ! file.isEmpty()) {
+//                String[] arr = file.getOriginalFilename().split("\\.");
+//                String filename = SecurityUtils.SHA(arr[0] + System.currentTimeMillis()) + "." + arr[1];
+//                String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
+//                FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path, filename));
+//                weibo.setImage("/upload/" + filename);
+//            }
+//        }
+//        long wid = mWeiboDao.addWeibo(weibo);
+//        return new ResponseEntity<Object>(
+//                new ResultResponse(ResultResponse.STATUS_OK, String.valueOf(wid)),
+//                HttpStatus.OK);
+//    }
 
     /**
      * 删除微博

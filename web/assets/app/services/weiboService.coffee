@@ -17,8 +17,21 @@ service
             callback data
           .error (data, status) ->
             callback
-      postNew : () ->
-        console.log 'post new weibo'
+      postNew : (auth, content, callback) ->
+        $http({
+          url : "http://localhost:8080/users/#{auth.uid}/weibo"
+          method : 'POST'
+          params :
+            token : auth.token
+            content : content
+        })
+        .success (data, status) ->
+          callback data
+        .error (data, status) ->
+          callback data
+
+      deleteWeibo : (wid, auth, callback) ->
+
 
       postComment : (wid, auth, content, callback) ->
         $http({
@@ -31,6 +44,18 @@ service
         .success (data, status) ->
           callback data
         .error (data, status) ->
-          alert '评论失败'
+          console.log 'comment failed.'
+
+      deleteComment : (wid, cid, auth, callback) ->
+        $http({
+          url : "http://localhost:8080/users/#{auth.uid}/weibo/#{wid}/comment/#{cid}"
+          method : 'DELETE'
+          params :
+            token : auth.token
+        })
+        .success (data, status) ->
+          callback data
+        .error (data, status) ->
+          callback data
     }
   ]

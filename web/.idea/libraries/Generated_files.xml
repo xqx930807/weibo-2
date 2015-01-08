@@ -4,6 +4,7 @@
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
         <item url="file://$PROJECT_DIR$/server.js" />
+        <item url="file://$PROJECT_DIR$/assets/app/directives/fileModelDirective.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
         <item url="file://$PROJECT_DIR$/assets/app/services/userService.js" />
@@ -28,6 +29,7 @@
       <root url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/services/configService.js" />
       <root url="file://$PROJECT_DIR$/assets/app/directives/configDirective.js" />
+      <root url="file://$PROJECT_DIR$/assets/app/directives/fileModelDirective.js" />
       <root url="file://$PROJECT_DIR$/server.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/loginController.js" />
       <root url="file://$PROJECT_DIR$/assets/app/controllers/navbarController.js" />
